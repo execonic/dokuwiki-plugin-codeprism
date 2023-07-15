@@ -16,15 +16,6 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin {
 		return $this->getConf('cdn');
 	}
 
-	private function getShowInvis() 
-	{
-		if ($this->getConf('show-invis') == 'true') {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public function register(Doku_Event_Handler $controller) {
 		$controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookjs');
 	}
@@ -34,7 +25,6 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin {
 
 		$theme = $this->getTheme();
 		$cdn = $this->getCdn();
-		$show_invis = $this->getShowInvis();
 
 		/** CSS  */
 		$event->data['link'][] = array(
@@ -50,17 +40,6 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin {
 			'plugins/command-line/prism-command-line.min.css',
 		);
 
-		if ($show_invis == true) {
-			$css_hrefs[] = 'plugins/show-invisibles/prism-show-invisibles.min.css';
-		}
-
-		foreach($css_hrefs as $href) {
-			$event->data['link'][] = array(
-				'rel' => 'stylesheet',
-				'href' => $cdn . $href
-			);
-		}
-
 		/** Scripts */
 		$scripts = array(
 			'prism.min.js',
@@ -69,11 +48,33 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin {
 			'plugins/line-highlight/prism-line-highlight.min.js',
 			'plugins/toolbar/prism-toolbar.min.js',
 			'plugins/copy-to-clipboard/prism-copy-to-clipboard.js',
-			'plugins/show-invisibles/prism-show-invisibles.min.js',
 			'plugins/show-language/prism-show-language.min.js',
 			'plugins/command-line/prism-command-line.min.js',
-			'plugins/autoloader/prism-autoloader.min.js'
+			'plugins/autoloader/prism-autoloader.min.js',
+			'plugins/file-highlight/prism-file-highlight.min.js'
 		);
+
+		if ($this->getConf('show-invis') == 'true') {
+			$css_hrefs[] = 'plugins/show-invisibles/prism-show-invisibles.min.css';
+			$scripts[] = 'plugins/show-invisibles/prism-show-invisibles.min.js';
+		}
+
+		if ($this->getConf('hl-brace') == 'true') {
+			$css_hrefs[] = 'plugins/match-braces/prism-match-braces.min.css';
+			$scripts[] = 'plugins/match-braces/prism-match-braces.min.js';
+		}
+
+		if ($this->getConf('previewer') == 'true') {
+			$css_hrefs[] = 'plugins/previewers/prism-previewers.min.css';
+			$scripts[] = 'plugins/previewers/prism-previewers.min.js';
+		}
+
+		foreach($css_hrefs as $href) {
+			$event->data['link'][] = array(
+				'rel' => 'stylesheet',
+				'href' => $cdn . $href
+			);
+		}
 
 		foreach($scripts as $script) {
 			$event->data['script'][] = array(

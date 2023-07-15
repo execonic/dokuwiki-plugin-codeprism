@@ -39,3 +39,18 @@ $meta['show-invis'] = [
 	]
 ];
 
+$meta['hl-brace'] = [
+	'multichoice',
+	'_choices' => [
+		'true',
+		'false',
+	]
+];
+
+$meta['previewer'] = [
+	'multichoice',
+	'_choices' => [
+		'true',
+		'false',
+	]
+];
