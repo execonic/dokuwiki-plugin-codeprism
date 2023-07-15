@@ -1,0 +1,7 @@
+base   codeprism
+author Siyuan Liu
+email  siyuanl96@gmail.com
+date   2023-07-12
+name   Codeprism Plugin
+desc   Using Prism to provide nice syntax highlighting.
+url    http://www.dokuwiki.org/plugin:codeprism
