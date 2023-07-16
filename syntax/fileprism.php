@@ -1,12 +1,15 @@
 <?php
 
-class syntax_plugin_codeprism_fileprism extends syntax_plugin_codeprism_codeprism {
-    protected $entry_pattern = '<fileprism\b.*/>';
-    protected $exit_pattern = '/>';
-    protected $match_pattern = '/<fileprism (.+?)( \[(.+?)\])* *\/>/';
+class syntax_plugin_codeprism_fileprism extends syntax_plugin_codeprism_codeprism
+{
+	protected $entry_pattern = '<fileprism\b.*/>';
+	protected $exit_pattern = '/>';
+	protected $match_pattern = '/<fileprism (.+?)( \[(.+?)\])* *\/>/';
 
 	public function connectTo($mode)
 	{
+		if (isset($_REQUEST['comment'])) return false;
+
 		$this->Lexer->addEntryPattern($this->entry_pattern, $mode, 'plugin_codeprism_fileprism');
 	}
 

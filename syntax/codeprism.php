@@ -1,27 +1,35 @@
 <?php
 
-class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
+{
 	protected $entry_pattern = '<codeprism\b.*?>(?=.*?</codeprism>)';
 	protected $exit_pattern = '</codeprism>';
 	protected $match_pattern = '/<codeprism (.+?)( \[(.+?)\])* *>/';
 
-	public function gettype() {
+	public function gettype()
+	{
 		return 'substition';
 	}
 
-	public function getSort() {
-		return 157;
+	public function getSort()
+	{
+		return 190;
 	}
 
-	public function connectTo($mode) {
+	public function connectTo($mode)
+	{
 		$this->Lexer->addEntryPattern($this->entry_pattern, $mode, 'plugin_codeprism_codeprism');
 	}
 
-	public function postConnect() {
+	public function postConnect()
+	{
 		$this->Lexer->addExitPattern($this->exit_pattern, 'plugin_codeprism_codeprism');
 	}
 
-	public function handle($match, $state, $pos, Doku_Handler $handler) {
+	public function handle($match, $state, $pos, Doku_Handler $handler)
+	{
+		if (isset($_REQUEST['comment'])) return false;
+
 		if ($state == DOKU_LEXER_ENTER) {
 			/** Default attributes. */
 			if ($this->getConf('hl-brace') == 'true') {
@@ -53,12 +61,11 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin {
 					unset($basic_option[1]);
 				}
 
-//				preg_match_all('/([\w-]+?)=([\w-]*) */', "$basic_option", $basic_arr);
-
 				foreach($basic_option as $opt) {
 					$key_val = preg_split('/=/', $opt);
 
 					switch ($key_val[0]) {
+					/** Parse <codeprism> syntax. */
 					case 'sl':
 						$pre_opt_arr['data-start'] = $key_val[1];
 						$pre_opt_arr['data-line-offset'] = $key_val[1];
@@ -105,7 +112,6 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin {
 				}
 
 				/**chunk[2]: [attr0="val0", attr1="val1", ...] */
-				//$extend_option = preg_split('/\s*,\s*/', trim($chunk[2]));
 				$extend_option = trim($chunk[2]);
 
 				preg_match_all('/([\w-]+?)="(.*?)"/', "$extend_option", $extend_arr, PREG_SET_ORDER);
@@ -138,7 +144,8 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin {
 		return array($state, $match);
 	}
 
-	public function render($mode, Doku_Renderer $renderer, $data) {
+	public function render($mode, Doku_Renderer $renderer, $data)
+	{
 		if ($mode != 'xhtml') return false;
 
 		list($state) = $data;
@@ -174,4 +181,3 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin {
 		return false;
 	}
 }
-

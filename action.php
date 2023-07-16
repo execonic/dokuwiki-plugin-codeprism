@@ -1,8 +1,9 @@
 <?php
 
-class action_plugin_codeprism extends DokuWiki_Action_Plugin {
-
-	private function getTheme() {
+class action_plugin_codeprism extends DokuWiki_Action_Plugin
+{
+	private function getTheme()
+	{
 		$theme = $this->getConf('theme');
 
 		if ($theme != 'default') {
@@ -12,15 +13,18 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin {
 		return $theme;
 	}
 
-	private function getCdn() {
+	private function getCdn()
+	{
 		return $this->getConf('cdn');
 	}
 
-	public function register(Doku_Event_Handler $controller) {
+	public function register(Doku_Event_Handler $controller)
+	{
 		$controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookjs');
 	}
 
-	public function _hookjs(Doku_Event $event, $param) {
+	public function _hookjs(Doku_Event $event, $param)
+	{
 		$pluginBase = DOKU_BASE.'lib/plugins';
 
 		$theme = $this->getTheme();

@@ -1,10 +1,4 @@
 pre.dokuwiki-plugin-codeprism {
-  border-radius: 0px !important;
-  max-height : 30em;
-  overflow-y : scroll;
-}
-
-pre.dokuwiki-plugin-codeprism,
-pre.dokuwiki-plugin-codeprism > code {
-  box-shadow: none !important;
+	max-height : 30em;
+	overflow-y : scroll;
 }
