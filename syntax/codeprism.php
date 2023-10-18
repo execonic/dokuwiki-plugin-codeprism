@@ -32,7 +32,7 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 
 		if ($state == DOKU_LEXER_ENTER) {
 			/** Default attributes. */
-			if ($this->getConf('hl-brace') == 'true') {
+			if ($this->getConf('hl-brace')) {
 				$code_opt_arr['match-braces'] = 'match-braces';
 			}
 

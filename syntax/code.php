@@ -13,7 +13,7 @@ class syntax_plugin_codeprism_code extends syntax_plugin_codeprism_codeprism
 
 	public function connectTo($mode)
 	{
-		if (isset($_REQUEST['comment']) || 'false' == $this->override_syntax_code()) {
+		if (isset($_REQUEST['comment']) || !$this->override_syntax_code()) {
 				return false;
 		}
 

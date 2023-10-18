@@ -46,7 +46,9 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin
 
 		/** Scripts */
 		$scripts = array(
-			'prism.min.js',
+			'prism.js',
+			'components.js',
+			'plugins/autoloader/prism-autoloader.min.js',
 			'components/prism-core.min.js',
 			'plugins/line-numbers/prism-line-numbers.min.js',
 			'plugins/line-highlight/prism-line-highlight.min.js',
@@ -54,21 +56,20 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin
 			'plugins/copy-to-clipboard/prism-copy-to-clipboard.js',
 			'plugins/show-language/prism-show-language.min.js',
 			'plugins/command-line/prism-command-line.min.js',
-			'plugins/autoloader/prism-autoloader.min.js',
 			'plugins/file-highlight/prism-file-highlight.min.js'
 		);
 
-		if ($this->getConf('show-invis') == 'true') {
+		if ($this->getConf('show-invis')) {
 			$css_hrefs[] = 'plugins/show-invisibles/prism-show-invisibles.min.css';
 			$scripts[] = 'plugins/show-invisibles/prism-show-invisibles.min.js';
 		}
 
-		if ($this->getConf('hl-brace') == 'true') {
+		if ($this->getConf('hl-brace')) {
 			$css_hrefs[] = 'plugins/match-braces/prism-match-braces.min.css';
 			$scripts[] = 'plugins/match-braces/prism-match-braces.min.js';
 		}
 
-		if ($this->getConf('previewer') == 'true') {
+		if ($this->getConf('previewer')) {
 			$css_hrefs[] = 'plugins/previewers/prism-previewers.min.css';
 			$scripts[] = 'plugins/previewers/prism-previewers.min.js';
 		}
