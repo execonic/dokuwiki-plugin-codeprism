@@ -38,3 +38,6 @@ $meta['hl-brace'] = [
 $meta['previewer'] = [
 	'onoff',
 ];
+
+$meta['user']  = array('string');
+$meta['host']  = array('string');

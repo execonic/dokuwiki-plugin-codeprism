@@ -1,4 +1,8 @@
-pre.dokuwiki-plugin-codeprism {
+pre.dokuwiki-plugin-codeprism-dft {
 	max-height : 30em;
 	overflow-y : scroll;
+}
+
+pre.dokuwiki-plugin-codeprism-full {
+	overflow :scroll;
 }

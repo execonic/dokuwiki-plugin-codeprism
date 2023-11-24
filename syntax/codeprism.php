@@ -30,10 +30,20 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 	{
 		if (isset($_REQUEST['comment'])) return false;
 
+		$pre_opt_arr['css'] = 'dft';
+
 		if ($state == DOKU_LEXER_ENTER) {
 			/** Default attributes. */
 			if ($this->getConf('hl-brace')) {
 				$code_opt_arr['match-braces'] = 'match-braces';
+			}
+
+			if ($this->getConf('user')) {
+				$pre_opt_arr['data-user'] = $this->getConf('user');
+			}
+
+			if ($this->getConf('host')) {
+				$pre_opt_arr['data-host'] = $this->getConf('host');
 			}
 
 			preg_match_all($this->match_pattern, "{$match}", $chunks, PREG_SET_ORDER);
@@ -90,6 +100,7 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 
 					case 'cmdout':
 						$pre_opt_arr['data-output'] = $key_val[1];
+						$pre_opt_arr['command-line'] = 'command-line';
 						break;
 
 					case 'user':
@@ -98,6 +109,10 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 
 					case 'host':
 						$pre_opt_arr['data-host'] = $key_val[1];
+						break;
+
+					case 'css':
+						$pre_opt_arr['css'] = $key_val[1];
 						break;
 
 					/** Parse <fileprism> syntax. */
@@ -138,6 +153,12 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 				}
 			}
 
+			/* `data-user` & `data-host` should be only used in command line. */
+			if (!$pre_opt_arr['command-line']) {
+				unset($pre_opt_arr['data-user']);
+				unset($pre_opt_arr['data-host']);
+			}
+
 			return array($state, $pre_opt_arr, $code_opt_arr);
 		}
 
@@ -154,7 +175,7 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 		case DOKU_LEXER_ENTER:
 			list(, $pre_opt_arr, $code_opt_arr) = $data;
 
-			$renderer->doc .= '<pre class="dokuwiki-plugin-codeprism ' . $pre_opt_arr['line-numbers'] . $pre_opt_arr['command-line'] . '"';
+			$renderer->doc .= '<pre class="dokuwiki-plugin-codeprism-'.$pre_opt_arr['css'].' '.$pre_opt_arr['line-numbers'].' '.$pre_opt_arr['command-line'] . '"';
 			unset($pre_opt_arr['line-numbers']);
 			unset($pre_opt_arr['command-line']);
 
