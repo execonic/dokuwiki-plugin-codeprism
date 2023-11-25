@@ -178,6 +178,7 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 			$renderer->doc .= '<pre class="dokuwiki-plugin-codeprism-'.$pre_opt_arr['css'].' '.$pre_opt_arr['line-numbers'].' '.$pre_opt_arr['command-line'] . '"';
 			unset($pre_opt_arr['line-numbers']);
 			unset($pre_opt_arr['command-line']);
+			unset($pre_opt_arr['css']);
 
 			foreach($pre_opt_arr as $key => $val) {
 				$renderer->doc .= ' ' . $key . '="' . $val . '"';

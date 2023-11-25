@@ -26,12 +26,13 @@ class syntax_plugin_codeprism_fileprism extends syntax_plugin_codeprism_codepris
 
 		switch ($state) {
 		case DOKU_LEXER_ENTER:
-			list(, $opt_arr) = $data;
+			list(, $pre_opt_arr, $code_opt_arr) = $data;
 
-			$renderer->doc .= '<pre class="dokuwiki-plugin-codeprism ' . $opt_arr['line-numbers'] . '"';
-			unset($opt_arr['line-numbers']);
+			$renderer->doc .= '<pre class="dokuwiki-plugin-codeprism-'.$pre_opt_arr['css'].' '.$pre_opt_arr['line-numbers'] . '"';
+			unset($pre_opt_arr['line-numbers']);
+			unset($pre_opt_arr['css']);
 
-			foreach($opt_arr as $key => $val) {
+			foreach($pre_opt_arr as $key => $val) {
 				$renderer->doc .= ' ' . $key . '="' . $val . '"';
 			}
 

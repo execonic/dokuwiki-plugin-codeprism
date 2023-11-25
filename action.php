@@ -47,7 +47,6 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin
 		/** Scripts */
 		$scripts = array(
 			'prism.js',
-			'components.js',
 			'plugins/autoloader/prism-autoloader.min.js',
 			'components/prism-core.min.js',
 			'plugins/line-numbers/prism-line-numbers.min.js',
@@ -70,8 +69,16 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin
 		}
 
 		if ($this->getConf('previewer')) {
+			/* Need to load css-extras.min.js to preview CSS and need to load css.min.js
+			 * first. so it seems impossible to use autoloder.min.js to load CSS resources.
+			 */
+			$scripts[] = 'components/prism-css.min.js';
+			$scripts[] = 'components/prism-css-extras.min.js';
+
 			$css_hrefs[] = 'plugins/previewers/prism-previewers.min.css';
+			$css_hrefs[] = 'plugins/inline-color/prism-inline-color.min.css';
 			$scripts[] = 'plugins/previewers/prism-previewers.min.js';
+			$scripts[] = 'plugins/inline-color/prism-inline-color.min.js';
 		}
 
 		foreach($css_hrefs as $href) {
