@@ -54,7 +54,8 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 				$basic_option = preg_split('/\s+/', trim($chunk[1]));
 
 				/**chunk[1]: php title sl=* el=* ... */
-				if (false == strpos($basic_option[0], '=')) {
+				/** Fit <code> syntax */
+				if ($basic_option[0] && false == strpos($basic_option[0], '=')) {
 					if ($basic_option[0] != '.') {
 						$pre_opt_arr['data-language'] = $basic_option[0];
 						$code_opt_arr['lang'] = $basic_option[0];
@@ -63,9 +64,9 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 					unset($basic_option[0]);
 				}
 
-				if (false == strpos($basic_option[1], '=')) {
+				if ($basic_option[1] && false == strpos($basic_option[1], '=')) {
 					if ($basic_option[1] != '.') {
-						$pre_opt_arr['title'] = $basic_option[1];
+						$pre_opt_arr['data-label'] = $key_val[1];
 					}
 
 					unset($basic_option[1]);
@@ -122,6 +123,10 @@ class syntax_plugin_codeprism_codeprism extends DokuWiki_Syntax_Plugin
 
 					case 'range':
 						$pre_opt_arr['data-range'] = $key_val[1];
+						break;
+
+					case 'title':
+						$pre_opt_arr['data-label'] = $key_val[1];
 						break;
 					}
 				}
