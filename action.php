@@ -15,7 +15,12 @@ class action_plugin_codeprism extends DokuWiki_Action_Plugin
 
 	private function getCdn()
 	{
-		return $this->getConf('cdn');
+		if ($this->getConf('custom-cdn')) {
+			return $this->getConf('custom-cdn');
+		}
+		else {
+			return $this->getConf('cdn');
+		}
 	}
 
 	public function register(Doku_Event_Handler $controller)

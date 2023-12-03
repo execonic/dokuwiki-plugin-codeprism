@@ -23,7 +23,7 @@ $meta['cdn'] = [
 		'https://cdn.bootcdn.net/ajax/libs/prism/1.29.0/',
 	]
 ];
-
+$meta['custom-cdn'] = array('string');
 $meta['override-code'] = array('onoff');
 $meta['show-invis'] = array('onoff');
 $meta['hl-brace'] = array('onoff');

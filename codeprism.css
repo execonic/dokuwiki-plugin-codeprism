@@ -1,10 +1,10 @@
 pre.dokuwiki-plugin-codeprism-dft {
-	max-height: 30em;
-	overflow-y: scroll;
+	max-height: 30rem;
+	overflow: auto;
 }
 
 pre.dokuwiki-plugin-codeprism-full {
-	overflow: scroll;
+	overflow: auto;
 }
 
 div.code-toolbar {
